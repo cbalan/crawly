@@ -4,6 +4,7 @@ import (
 	"strings"
 	"flag"
 	"runtime"
+	"time"
 	"github.com/cbalan/crawly/libcrawly"
 )
 
@@ -11,6 +12,7 @@ var (
 	baseUrl     = flag.String("url", "http://www.google.com", "Base URL")
 	concurrency = flag.Int("c", 1, "Concurrency")
 	bufferSize  = flag.Int("bs", 0, "Buffer size")
+	timeout     = flag.Int("t", 5, "Timeout")
 )
 
 func init() {
@@ -19,7 +21,7 @@ func init() {
 
 func main() {
 	flag.Parse()
-	c := libcrawly.NewCrawler(*bufferSize)
+	c := libcrawly.NewCrawler(*bufferSize, time.Duration(*timeout)*time.Second)
 
 	c.ValidUrl = func(url string) bool {
 		if !strings.HasPrefix(url, *baseUrl) {
