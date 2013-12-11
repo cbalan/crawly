@@ -74,7 +74,6 @@ func (c *Crawler) popUrl(timeout time.Duration) (url string, err error) {
 	select {
 	case url = <-c.workChan :
 	case <-time.After(timeout):
-
 		err = errors.New("popUrl timeout succedded")
 	}
 	return url, err
